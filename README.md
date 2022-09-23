@@ -3,7 +3,9 @@
 ## Getting Started
 
 ```sh
-go mod tidy
+# run application
+go run .
 
-go run main.go
+# update mod file
+go mod tidy
 ```
