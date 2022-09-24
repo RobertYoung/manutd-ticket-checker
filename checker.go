@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	haas "github.com/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
+	haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 
 	"log"
 
