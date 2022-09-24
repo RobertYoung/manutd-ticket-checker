@@ -10,6 +10,7 @@ import (
 const UNITED_PREMIER_IMAGE_ID = "1000284.png"
 const UNITED_BUY_BUTTON_TEXT = "BUY NOW"
 const UNITED_EVENT_PAGE = "https://tickets.manutd.com/en-GB/categories/home-tickets"
+const UNITED_MAX_PRICE = 100
 
 type UnitedChecker struct {
 	browser             *rod.Browser
@@ -17,6 +18,7 @@ type UnitedChecker struct {
 	premier_league_only bool
 	haas_api            *haas.HomeAssistantAPI
 	available_events    []*UnitedEventItem
+	haas_notify_device  string
 }
 
 func (c *UnitedChecker) Check() {
@@ -54,7 +56,12 @@ func (c *UnitedChecker) Check() {
 	}
 
 	c.UpdateHaasState()
-	// c.SendNotification()
+
+	count_available := c.CountEventsAvailable()
+
+	if count_available > 0 {
+		c.SendNotification(count_available)
+	}
 }
 
 func (c *UnitedChecker) UpdateHaasState() {
@@ -76,10 +83,26 @@ func (c *UnitedChecker) LoadEventListPage() {
 	}
 }
 
-func (c *UnitedChecker) SendNotification(device string) {
+func (c *UnitedChecker) CountEventsAvailable() int {
+	var count int = 0
+
+	for _, event := range c.available_events {
+		if event.State() != "available" {
+			continue
+		}
+
+		fmt.Printf("%s available!\n", event.Name())
+
+		count += 1
+	}
+
+	return count
+}
+
+func (c *UnitedChecker) SendNotification(count int) {
 	request := haas.HomeAssistantNotifyRequest{
 		Title:   "Manchester United",
-		Message: "Tickets available! 🔴⚽",
+		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", count),
 	}
-	c.haas_api.Notify(device, request)
+	c.haas_api.Notify(c.haas_notify_device, request)
 }

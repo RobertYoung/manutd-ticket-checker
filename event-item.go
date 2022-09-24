@@ -48,7 +48,11 @@ func (e UnitedEventItem) EntityId() string {
 }
 
 func (e UnitedEventItem) State() string {
-	return "available" // TODO:
+	if e.min_price > UNITED_MAX_PRICE {
+		return "unavailable"
+	}
+
+	return "available"
 }
 
 func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {

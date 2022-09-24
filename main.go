@@ -50,7 +50,7 @@ func main() {
 			premier_league_only := cCtx.Bool("premier-league-only")
 			haas_url := cCtx.String("haas-url")
 			haas_token := cCtx.String("haas-token")
-			// home_assistant_notify_device := cCtx.String("haas-notify-device")
+			haas_notify_device := cCtx.String("haas-notify-device")
 
 			fmt.Print("Finding matches")
 			if premier_league_only {
@@ -58,17 +58,18 @@ func main() {
 			}
 			fmt.Println()
 
-			var ha_api *haas.HomeAssistantAPI = nil
+			var haas_api *haas.HomeAssistantAPI = nil
 
 			if haas_url != "" && haas_token != "" {
-				ha_api = haas.NewHomeAssistantAPI(haas_url, haas_token)
+				haas_api = haas.NewHomeAssistantAPI(haas_url, haas_token)
 			} else {
 				log.Println("home assistant integration disabled due to missing url and token")
 			}
 
 			checker := UnitedChecker{
 				premier_league_only: premier_league_only,
-				haas_api:            ha_api,
+				haas_api:            haas_api,
+				haas_notify_device:  haas_notify_device,
 			}
 
 			checker.Check()

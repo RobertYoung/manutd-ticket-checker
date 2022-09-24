@@ -1,6 +1,6 @@
 # Manchester United Ticket Checker
 
-A application to scrape the Manchested United ticket site to find available matches and the prices.
+A application to scrape the Manchested United ticket site to find available matches, prices, and pushes the data to Home Assistant.
 
 ## Getting Started
 
