@@ -1,10 +1,9 @@
-name: goreleaser
-
 on:
   push:
     tags:
       - "*"
 
+name: upload-release-artifacts
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -20,6 +19,15 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --skip-publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Replace release artifact
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ github.ref_name }}"
+          artifacts: dist/*
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifactErrorsFailBuild: true
+          allowUpdates: true
