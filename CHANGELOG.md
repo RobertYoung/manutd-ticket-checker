@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.2.0...v1.2.1) (2022-09-24)
+
+
+### Bug Fixes
+
+* removes release please ([ad763c8](https://github.com/RobertYoung/manutd-ticket-checker/commit/ad763c8490ad234c172ce6dca56ceb41dcbf90ae))
+
 ## [1.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.1.0...v1.2.0) (2022-09-24)
 
 
