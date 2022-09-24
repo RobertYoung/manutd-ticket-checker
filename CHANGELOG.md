@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.0.0...v2.1.0) (2022-09-24)
+
+
+### Features
+
+* adds more unavailable matches and imrpoves readme ([17bdcbb](https://github.com/RobertYoung/manutd-ticket-checker/commit/17bdcbb9f8b1df2a4c6fd16548868ac8d0318806))
+
 ## [2.0.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.6.0...v2.0.0) (2022-09-24)
 
 
