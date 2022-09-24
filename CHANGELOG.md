@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.2.1...v1.3.0) (2022-09-24)
+
+
+### Features
+
+* upload release artifacts ([c87e2ba](https://github.com/RobertYoung/manutd-ticket-checker/commit/c87e2babdc0f7fbe292cacdc2e85159ce33c908d))
+
 ## [1.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.2.0...v1.2.1) (2022-09-24)
 
 
