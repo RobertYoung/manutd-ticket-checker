@@ -24,3 +24,9 @@ func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
 func (e UnitedEventItem) BuyButton() *rod.Element {
 	return e.element.MustElement("div.addToBasket > a")
 }
+
+func (c *UnitedChecker) LoadEventDetailPage(event *UnitedEventItem) {
+	buy_button := event.BuyButton()
+	buy_button.MustEval(`() => this.target="_blank"`)
+	buy_button.MustClick()
+}
