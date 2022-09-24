@@ -1,4 +1,4 @@
-package main
+package mutc
 
 type HomeAssistantMatchStateAttributes struct {
 	MinPrice     uint16 `json:"min_price"`

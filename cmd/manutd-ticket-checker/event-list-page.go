@@ -1,4 +1,4 @@
-package main
+package mutc
 
 import haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 
