@@ -1,6 +1,11 @@
 package main
 
-import "github.com/go-rod/rod"
+import (
+	"errors"
+	"strings"
+
+	"github.com/go-rod/rod"
+)
 
 type UnitedEventItem struct {
 	element *rod.Element
@@ -18,7 +23,17 @@ func (e UnitedEventItem) Name() *string {
 }
 
 func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
-	return e.element.Element("div.addToBasket:not([style*='display: none']) > a")
+	element, err := e.element.Element("div.addToBasket:not([style*='display: none']) > a")
+
+	if err != nil {
+		return nil, err
+	}
+
+	if strings.ToUpper(element.MustText()) == "BUY NOW" {
+		return element, err
+	}
+
+	return nil, errors.New("buy button not found")
 }
 
 func (e UnitedEventItem) BuyButton() *rod.Element {

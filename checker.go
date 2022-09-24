@@ -1,6 +1,10 @@
 package main
 
-import "github.com/go-rod/rod"
+import (
+	"fmt"
+
+	"github.com/go-rod/rod"
+)
 
 type UnitedChecker struct {
 	browser    *rod.Browser
@@ -15,8 +19,29 @@ func (c *UnitedChecker) Check() {
 	events := c.event_list.FindAvailableEvents()
 
 	for _, event := range events {
+		fmt.Printf("Checking %s...", *event.Name())
+
 		c.LoadEventDetailPage(event)
+
+		pages, err := c.browser.Pages()
+
+		if err != nil {
+			panic(err)
+		}
+
+		event_detail_page := UnitedEventDetailPage{
+			UnitedPage: &UnitedPage{
+				pages.First(),
+			},
+		}
+		event_detail_page.WaitLoad()
+		event_detail_page.DeleteCookieOverlay()
+		event_detail_page.FindPrices()
+		event_detail_page.Close()
+
+		fmt.Printf(" prices found: £%d -> £%d \n", event_detail_page.min_price, event_detail_page.max_price)
 	}
+
 }
 
 func (c *UnitedChecker) LoadEventListPage() {

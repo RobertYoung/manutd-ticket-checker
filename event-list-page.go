@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 type UnitedEventListPage struct {
 	*UnitedPage
 }
@@ -14,8 +10,6 @@ func (c *UnitedEventListPage) FindAvailableEvents() []*UnitedEventItem {
 
 	for _, element := range events {
 		event := UnitedEventItem{element}
-
-		fmt.Println(*event.Name())
 
 		_, err := event.FindBuyButton()
 
