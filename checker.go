@@ -31,7 +31,7 @@ func (c *UnitedChecker) Check() {
 
 		event_detail_page := UnitedEventDetailPage{
 			UnitedPage: &UnitedPage{
-				pages.First(),
+				pages.MustFindByURL("/events/"),
 			},
 		}
 		event_detail_page.WaitLoad()
