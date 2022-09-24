@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.1.0...v2.2.0) (2022-09-24)
+
+
+### Features
+
+* migrate module to github ([041d283](https://github.com/RobertYoung/manutd-ticket-checker/commit/041d283c74bdb234e287a1b5c299fd2b0197c0e5))
+
 ## [2.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.0.0...v2.1.0) (2022-09-24)
 
 
