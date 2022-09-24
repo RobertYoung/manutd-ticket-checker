@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.2.0...v2.2.1) (2022-09-24)
+
+
+### Bug Fixes
+
+* incorrect module name ([18825d1](https://github.com/RobertYoung/manutd-ticket-checker/commit/18825d18216c4dff27d50e16c024c2d499a41bd4))
+
 ## [2.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.1.0...v2.2.0) (2022-09-24)
 
 
