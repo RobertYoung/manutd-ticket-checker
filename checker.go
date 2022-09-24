@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 
 	"github.com/go-rod/rod"
 )
@@ -14,6 +15,7 @@ type UnitedChecker struct {
 	browser             *rod.Browser
 	event_list          *UnitedEventListPage
 	premier_league_only bool
+	haas_api            *haas.HomeAssistantAPI
 }
 
 func (c *UnitedChecker) Check() {
@@ -54,4 +56,31 @@ func (c *UnitedChecker) LoadEventListPage() {
 			c.browser.MustConnect().MustPage(UNITED_EVENT_PAGE),
 		},
 	}
+}
+
+func (c *UnitedChecker) SendNotification(device string) {
+	if c.haas_api == nil {
+		return
+	}
+
+	request := haas.HomeAssistantNotifyRequest{
+		Title:   "Manchester United",
+		Message: "Tickets available! 🔴⚽",
+	}
+	c.haas_api.Notify(device, request)
+}
+
+func (c *UnitedChecker) UpdateState(entity, state string, min_price, max_price uint16) {
+	if c.haas_api == nil {
+		return
+	}
+
+	request := haas.HomeAssistantStateUpdateRequest{
+		State: state,
+		Attribute: HomeAssistantMatchStateAttributes{
+			MinPrice: min_price,
+			MaxPrice: max_price,
+		},
+	}
+	c.haas_api.StateUpdate(entity, request)
 }

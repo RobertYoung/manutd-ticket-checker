@@ -9,10 +9,10 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${fileDirname}",
+      "program": "${workspaceFolder}",
       "args": [
-        "-rod",
-        "show,slow=1s,trace,devtools"
+        "--env-file",
+        "env.yml",
       ]
     }
   ]

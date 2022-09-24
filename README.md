@@ -10,15 +10,12 @@ A application to scrape the Manchested United ticket site to find available matc
 
 # only show premier league matches
 > go run . --premier-league-only
-Finding matches for premier league only
-Checking Manchester United v Newcastle United... prices found: £320 -> £320
-Checking Manchester United v Tottenham Hotspur... prices found: £440 -> £440
-Checking Manchester United v West Ham United... prices found: £320 -> £320
-Checking Manchester United v Nottingham Forest... prices found: £50 -> £270
-Checking Manchester United v A.F.C. Bournemouth... prices found: £270 -> £270
-Checking Manchester United v Manchester City... prices found: £534 -> £534
-Checking Manchester United v Crystal Palace... prices found: £270 -> £270
-Checking Manchester United v Leicester City... prices found: £270 -> £270
+
+# push state to home assistant and send notification
+> go run . --premier-league-only --haas-url ${HA_URL} --haas-token ${HA_TOKEN}
+
+# optionally, a file can be specified to configure the cli
+> go run . --env-file env.yml
 
 # cli usage
 > go run . -h
@@ -32,7 +29,11 @@ COMMANDS:
    help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --help, -h                    show help (default: false)
-   --premier-league-only, --plo  (default: false)
-   --rod value                   rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace
+   --env-file value
+   --haas-notify-device value, --hnd value  device in home assistant to send the notification to
+   --haas-token value, --ht value           token for home assistant to authenticate to the api
+   --haas-url value, --hu value             url of home assistant to push state and messages to
+   --help, -h                               show help (default: false)
+   --premier-league-only, --plo             (default: false)
+   --rod value                              rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace
 ```
