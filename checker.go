@@ -16,17 +16,17 @@ type UnitedChecker struct {
 	event_list          *UnitedEventListPage
 	premier_league_only bool
 	haas_api            *haas.HomeAssistantAPI
+	available_events    []*UnitedEventItem
 }
 
 func (c *UnitedChecker) Check() {
 	c.browser = rod.New()
 	c.LoadEventListPage()
 	c.event_list.DeleteCookieOverlay()
+	c.available_events = c.event_list.FindAvailableEvents(c.premier_league_only)
 
-	events := c.event_list.FindAvailableEvents(c.premier_league_only)
-
-	for _, event := range events {
-		fmt.Printf("Checking %s...", *event.Name())
+	for _, event := range c.available_events {
+		fmt.Printf("Checking %s...", event.Name())
 
 		event.LoadEventDetailPage(event)
 
@@ -43,44 +43,43 @@ func (c *UnitedChecker) Check() {
 		}
 		event_detail_page.WaitLoad()
 		event_detail_page.DeleteCookieOverlay()
-		event_detail_page.FindPrices()
-		event_detail_page.Close()
 
-		fmt.Printf(" prices found: £%d -> £%d \n", event_detail_page.min_price, event_detail_page.max_price)
+		min_price, max_price := event_detail_page.FindPrices()
+		event.min_price = min_price
+		event.max_price = max_price
+
+		fmt.Printf(" prices found: £%d -> £%d \n", min_price, max_price)
+
+		event_detail_page.Close()
+	}
+
+	c.UpdateHaasState()
+	// c.SendNotification()
+}
+
+func (c *UnitedChecker) UpdateHaasState() {
+	if c.haas_api == nil {
+		return
+	}
+
+	for _, event := range c.available_events {
+		event.UpdateState()
 	}
 }
 
 func (c *UnitedChecker) LoadEventListPage() {
 	c.event_list = &UnitedEventListPage{
-		&UnitedPage{
+		UnitedPage: &UnitedPage{
 			c.browser.MustConnect().MustPage(UNITED_EVENT_PAGE),
 		},
+		haas_api: c.haas_api,
 	}
 }
 
 func (c *UnitedChecker) SendNotification(device string) {
-	if c.haas_api == nil {
-		return
-	}
-
 	request := haas.HomeAssistantNotifyRequest{
 		Title:   "Manchester United",
 		Message: "Tickets available! 🔴⚽",
 	}
 	c.haas_api.Notify(device, request)
-}
-
-func (c *UnitedChecker) UpdateState(entity, state string, min_price, max_price uint16) {
-	if c.haas_api == nil {
-		return
-	}
-
-	request := haas.HomeAssistantStateUpdateRequest{
-		State: state,
-		Attribute: HomeAssistantMatchStateAttributes{
-			MinPrice: min_price,
-			MaxPrice: max_price,
-		},
-	}
-	c.haas_api.StateUpdate(entity, request)
 }

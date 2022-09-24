@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 	"strings"
 
 	"github.com/go-rod/rod"
@@ -9,17 +11,44 @@ import (
 
 type UnitedEventItem struct {
 	*rod.Element
+
+	haas_api             *haas.HomeAssistantAPI
+	min_price, max_price uint16
 }
 
-func (e UnitedEventItem) Name() *string {
-	default_name := "-"
+func (e UnitedEventItem) Name() string {
 	name, err := e.Attribute("data-name")
 
 	if err != nil {
-		return &default_name
+		return "unknown"
 	}
 
-	return name
+	return *name
+}
+
+func (e UnitedEventItem) Opponent() string {
+	name := e.Name()
+	split := strings.Split(name, "v")
+
+	if len(split) == 2 {
+		return split[1]
+	}
+
+	return "unknown"
+}
+
+func (e UnitedEventItem) EntityId() string {
+	value := e.Opponent()
+	value = strings.Trim(value, " ")
+	value = strings.ToLower(value)
+	value = strings.ReplaceAll(value, " ", "_")
+	value = strings.ReplaceAll(value, ".", "")
+
+	return value
+}
+
+func (e UnitedEventItem) State() string {
+	return "available" // TODO:
 }
 
 func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
@@ -58,4 +87,16 @@ func (e UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) {
 	buy_button := event.BuyButton()
 	buy_button.MustEval(`() => this.target="_blank"`)
 	buy_button.MustClick()
+}
+
+func (e UnitedEventItem) UpdateState() {
+	request := haas.HomeAssistantStateUpdateRequest{
+		State: e.State(),
+		Attribute: HomeAssistantMatchStateAttributes{
+			MinPrice:     e.min_price,
+			MaxPrice:     e.max_price,
+			FriendlyName: e.Name(),
+		},
+	}
+	e.haas_api.StateUpdate(fmt.Sprintf("entity.united_ticket_home_%s", e.EntityId()), request)
 }
