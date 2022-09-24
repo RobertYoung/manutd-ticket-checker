@@ -2,11 +2,11 @@ package main
 
 import "github.com/go-rod/rod"
 
-type Event struct {
+type UnitedEventItem struct {
 	element *rod.Element
 }
 
-func (e Event) Name() *string {
+func (e UnitedEventItem) Name() *string {
 	default_name := "-"
 	name, err := e.element.Attribute("data-name")
 
@@ -17,10 +17,10 @@ func (e Event) Name() *string {
 	return name
 }
 
-func (e Event) FindBuyButton() (*rod.Element, error) {
+func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
 	return e.element.Element("div.addToBasket:not([style*='display: none']) > a")
 }
 
-func (e Event) BuyButton() *rod.Element {
+func (e UnitedEventItem) BuyButton() *rod.Element {
 	return e.element.MustElement("div.addToBasket > a")
 }
