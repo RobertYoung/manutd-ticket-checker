@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.5.0...v1.6.0) (2022-09-24)
+
+
+### Features
+
+* adds haas api integration ([8476146](https://github.com/RobertYoung/manutd-ticket-checker/commit/8476146b78a74d4bd91a8b0c141a55227f151a59))
+
 ## [1.5.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.4.0...v1.5.0) (2022-09-24)
 
 
