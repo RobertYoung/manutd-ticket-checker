@@ -1,7 +1,9 @@
 on:
-  push:
-    tags:
-      - "*"
+  release:
+    types:
+      - created
+      - published
+      - released
 
 name: upload-release-artifacts
 jobs:
