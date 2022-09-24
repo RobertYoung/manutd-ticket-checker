@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.0.0...v1.1.0) (2022-09-24)
+
+
+### Features
+
+* adds description and cli usage ([d6c9efe](https://github.com/RobertYoung/manutd-ticket-checker/commit/d6c9efef8cb072dd9807aa761380c730a6138219))
+
 ## 1.0.0 (2022-09-24)
 
 
