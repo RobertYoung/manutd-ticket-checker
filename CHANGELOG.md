@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.1.0...v1.2.0) (2022-09-24)
+
+
+### Features
+
+* trigger a release ([20773db](https://github.com/RobertYoung/manutd-ticket-checker/commit/20773db69549c6785661be28622527f59579430e))
+
 ## [1.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.0.0...v1.1.0) (2022-09-24)
 
 
