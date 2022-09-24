@@ -1,6 +1,6 @@
 package main
 
-import haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
+import haas "github/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 
 type UnitedEventListPage struct {
 	*UnitedPage

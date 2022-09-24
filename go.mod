@@ -1,4 +1,4 @@
-module iamrobertyoung/manutd-ticket-checker/v2
+module github/robertyoung/manutd-ticket-checker/v2
 
 go 1.17
 

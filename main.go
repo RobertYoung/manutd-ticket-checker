@@ -1,7 +1,7 @@
 package main
 
 import (
-	haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
+	haas "github/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 	"log"
 	"os"
 
