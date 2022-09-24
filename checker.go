@@ -4,6 +4,8 @@ import (
 	"fmt"
 	haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 
+	"log"
+
 	"github.com/go-rod/rod"
 )
 
@@ -28,7 +30,8 @@ func (c *UnitedChecker) Check() {
 	c.available_events = c.event_list.FindAvailableEvents(c.premier_league_only)
 
 	for _, event := range c.available_events {
-		fmt.Printf("Checking %s...", event.Name())
+		name := event.Name()
+		log.Printf("checking %s...", name)
 
 		event.LoadEventDetailPage(event)
 
@@ -50,7 +53,7 @@ func (c *UnitedChecker) Check() {
 		event.min_price = min_price
 		event.max_price = max_price
 
-		fmt.Printf(" prices found: £%d -> £%d \n", min_price, max_price)
+		log.Printf("found %s prices: £%d -> £%d \n", name, min_price, max_price)
 
 		event_detail_page.Close()
 	}
@@ -91,7 +94,7 @@ func (c *UnitedChecker) CountEventsAvailable() int {
 			continue
 		}
 
-		fmt.Printf("%s available!\n", event.Name())
+		log.Printf("%s available!\n", event.Name())
 
 		count += 1
 	}

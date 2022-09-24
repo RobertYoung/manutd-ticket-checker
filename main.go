@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	haas "iamrobertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 	"log"
 	"os"
@@ -52,11 +51,11 @@ func main() {
 			haas_token := cCtx.String("haas-token")
 			haas_notify_device := cCtx.String("haas-notify-device")
 
-			fmt.Print("Finding matches")
 			if premier_league_only {
-				fmt.Print(" for premier league only")
+				log.Println("Finding matches for premier league only")
+			} else {
+				log.Println("Finding matches")
 			}
-			fmt.Println()
 
 			var haas_api *haas.HomeAssistantAPI = nil
 
