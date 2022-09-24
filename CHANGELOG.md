@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.4.0...v1.5.0) (2022-09-24)
+
+
+### Features
+
+* use ga token ([4f9023e](https://github.com/RobertYoung/manutd-ticket-checker/commit/4f9023e5c897a2e730d61d7163c6c4773b41d4ed))
+
 ## [1.4.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.3.0...v1.4.0) (2022-09-24)
 
 
