@@ -4,7 +4,11 @@ A application to scrape the Manchested United ticket site to find available matc
 
 ## Installation 
 
-- Download the latest release from [Github](https://github.com/RobertYoung/manutd-ticket-checker/releases/latest)
+```
+go install github.com/robertyoung/manutd-ticket-checker/v2@latest
+```
+
+Or download the latest release from [Github](https://github.com/RobertYoung/manutd-ticket-checker/releases/latest)
 
 ## Usage
 
