@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.3.0...v1.4.0) (2022-09-24)
+
+
+### Features
+
+* run release-tag on release ([16cabdc](https://github.com/RobertYoung/manutd-ticket-checker/commit/16cabdcd5d5ea17a0abf78d7c4424598fb51595a))
+
 ## [1.3.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.2.1...v1.3.0) (2022-09-24)
 
 
