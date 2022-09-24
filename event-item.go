@@ -29,7 +29,7 @@ func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
 		return nil, err
 	}
 
-	if strings.ToUpper(element.MustText()) == "BUY NOW" {
+	if strings.ToUpper(element.MustText()) == UNITED_BUY_BUTTON_TEXT {
 		return element, err
 	}
 

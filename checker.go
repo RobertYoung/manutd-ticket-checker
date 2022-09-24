@@ -7,6 +7,8 @@ import (
 )
 
 const UNITED_PREMIER_IMAGE_ID = "1000284.png"
+const UNITED_BUY_BUTTON_TEXT = "BUY NOW"
+const UNITED_EVENT_PAGE = "https://tickets.manutd.com/en-GB/categories/home-tickets"
 
 type UnitedChecker struct {
 	browser             *rod.Browser
@@ -44,13 +46,12 @@ func (c *UnitedChecker) Check() {
 
 		fmt.Printf(" prices found: £%d -> £%d \n", event_detail_page.min_price, event_detail_page.max_price)
 	}
-
 }
 
 func (c *UnitedChecker) LoadEventListPage() {
 	c.event_list = &UnitedEventListPage{
 		&UnitedPage{
-			c.browser.MustConnect().MustPage("https://tickets.manutd.com/en-GB/categories/home-tickets"),
+			c.browser.MustConnect().MustPage(UNITED_EVENT_PAGE),
 		},
 	}
 }
