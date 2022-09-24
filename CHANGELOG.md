@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.6.0...v2.0.0) (2022-09-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* push entity state to home assistant
+
+### Features
+
+* push entity state to home assistant ([3f483bb](https://github.com/RobertYoung/manutd-ticket-checker/commit/3f483bbaa2b1de1e89534226288e2096479d2770))
+* send notification if available match found ([c20a276](https://github.com/RobertYoung/manutd-ticket-checker/commit/c20a2769afa5a93c085100b49c743c8b564c6341))
+
 ## [1.6.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v1.5.0...v1.6.0) (2022-09-24)
 
 
