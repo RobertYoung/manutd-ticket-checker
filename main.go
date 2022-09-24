@@ -1,9 +1,10 @@
 package main
 
 import (
-	haas "github/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 	"log"
 	"os"
+
+	haas "github.com/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 
 	"github.com/urfave/cli/v2"
 	"github.com/urfave/cli/v2/altsrc"

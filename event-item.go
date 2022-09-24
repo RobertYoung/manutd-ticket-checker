@@ -3,8 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
-	haas "github/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 	"strings"
+
+	haas "github.com/robertyoung/manutd-ticket-checker/v2/internal/home-assistant"
 
 	"github.com/go-rod/rod"
 )
