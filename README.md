@@ -2,23 +2,27 @@
 
 A application to scrape the Manchested United ticket site to find available matches, prices, and pushes the data to Home Assistant.
 
-## Getting Started
+## Installation 
+
+- Download the latest release from [Github](https://github.com/RobertYoung/manutd-ticket-checker/releases/latest)
+
+## Usage
 
 ```sh
 # run application
-> go run .
+> ./manutd-ticket-checker
 
 # only show premier league matches
-> go run . --premier-league-only
+> ./manutd-ticket-checker --premier-league-only
 
 # push state to home assistant and send notification
-> go run . --premier-league-only --haas-url ${HA_URL} --haas-token ${HA_TOKEN}
+> ./manutd-ticket-checker --premier-league-only --haas-url ${HA_URL} --haas-token ${HA_TOKEN}
 
 # optionally, a file can be specified to configure the cli
-> go run . --env-file env.yml
+> ./manutd-ticket-checker --env-file env.yml
 
 # cli usage
-> go run . -h
+> ./manutd-ticket-checker -h
 NAME:
    manutd-ticket-checker - finds available manchester united tickets
 
@@ -37,3 +41,18 @@ GLOBAL OPTIONS:
    --premier-league-only, --plo             (default: false)
    --rod value                              rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace
 ```
+
+## Development
+
+```sh
+# run application
+> go run .
+
+# create a snapshot with goreleaser
+> goreleaser release --snapshot --rm-dist
+```
+
+## Home Assistsant
+
+![Home Assistant Dashboard Example](/assets/img/haas_dashboard.png "Home Assistant Dashboard Example")
+![Home Assistant Notification Example](/assets/img/haas_notification.jpeg "Home Assistant Notification Example")

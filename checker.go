@@ -27,9 +27,15 @@ func (c *UnitedChecker) Check() {
 	c.browser = rod.New()
 	c.LoadEventListPage()
 	c.event_list.DeleteCookieOverlay()
-	c.available_events = c.event_list.FindAvailableEvents(c.premier_league_only)
+	c.available_events = c.event_list.FindEvents(c.premier_league_only)
 
 	for _, event := range c.available_events {
+		_, err := event.FindBuyButton()
+
+		if err != nil {
+			continue
+		}
+
 		name := event.Name()
 		log.Printf("checking %s...", name)
 

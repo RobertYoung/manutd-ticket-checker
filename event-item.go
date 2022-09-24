@@ -52,6 +52,12 @@ func (e UnitedEventItem) State() string {
 		return "unavailable"
 	}
 
+	_, err := e.FindBuyButton()
+
+	if err != nil {
+		return "unavailable"
+	}
+
 	return "available"
 }
 
