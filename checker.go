@@ -6,9 +6,12 @@ import (
 	"github.com/go-rod/rod"
 )
 
+const UNITED_PREMIER_IMAGE_ID = "1000284.png"
+
 type UnitedChecker struct {
-	browser    *rod.Browser
-	event_list *UnitedEventListPage
+	browser             *rod.Browser
+	event_list          *UnitedEventListPage
+	premier_league_only bool
 }
 
 func (c *UnitedChecker) Check() {
@@ -16,12 +19,12 @@ func (c *UnitedChecker) Check() {
 	c.LoadEventListPage()
 	c.event_list.DeleteCookieOverlay()
 
-	events := c.event_list.FindAvailableEvents()
+	events := c.event_list.FindAvailableEvents(c.premier_league_only)
 
 	for _, event := range events {
 		fmt.Printf("Checking %s...", *event.Name())
 
-		c.LoadEventDetailPage(event)
+		event.LoadEventDetailPage(event)
 
 		pages, err := c.browser.Pages()
 

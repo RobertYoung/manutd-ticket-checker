@@ -8,12 +8,12 @@ import (
 )
 
 type UnitedEventItem struct {
-	element *rod.Element
+	*rod.Element
 }
 
 func (e UnitedEventItem) Name() *string {
 	default_name := "-"
-	name, err := e.element.Attribute("data-name")
+	name, err := e.Attribute("data-name")
 
 	if err != nil {
 		return &default_name
@@ -23,7 +23,7 @@ func (e UnitedEventItem) Name() *string {
 }
 
 func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
-	element, err := e.element.Element("div.addToBasket:not([style*='display: none']) > a")
+	element, err := e.Element.Element("div.addToBasket:not([style*='display: none']) > a")
 
 	if err != nil {
 		return nil, err
@@ -36,11 +36,25 @@ func (e UnitedEventItem) FindBuyButton() (*rod.Element, error) {
 	return nil, errors.New("buy button not found")
 }
 
-func (e UnitedEventItem) BuyButton() *rod.Element {
-	return e.element.MustElement("div.addToBasket > a")
+func (e UnitedEventItem) IsPremierLeagueEvent() bool {
+	button, err := e.Element.Element("img.item_image.otherImageMediumImageUrl")
+
+	if err != nil {
+		return false
+	}
+
+	if strings.Contains(*button.MustAttribute("src"), UNITED_PREMIER_IMAGE_ID) {
+		return true
+	}
+
+	return false
 }
 
-func (c *UnitedChecker) LoadEventDetailPage(event *UnitedEventItem) {
+func (e UnitedEventItem) BuyButton() *rod.Element {
+	return e.MustElement("div.addToBasket > a")
+}
+
+func (e UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) {
 	buy_button := event.BuyButton()
 	buy_button.MustEval(`() => this.target="_blank"`)
 	buy_button.MustClick()
