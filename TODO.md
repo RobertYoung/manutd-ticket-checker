@@ -1,0 +1,5 @@
+- [Docker Containerd](https://docs.docker.com/desktop/containerd/#building-multi-platform-images)
+  - Current an error when trying to build using multiple platforms [Issue](https://github.com/docker/buildx/issues/59)
+    -  `docker exporter does not currently support exporting manifest lists`
+  - Can we use this instead of building and pushing images twice
+  - This will allow multiple os/archs to be pushed to the same tag for better UX

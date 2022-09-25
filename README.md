@@ -15,6 +15,9 @@ docker run -it \
   -v $(pwd)/.cache:/root/.cache \
   -v $(pwd)/env.yml:/root/env.yml \
   robertyoung/manutd-ticket-checker:latest --env-file /root/env.yml
+
+# arm64 support
+docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:latest-arm64 --help
 ```
 
 ### Go
