@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim
-# slim?
+
 RUN apt update && apt install -y chromium
 
-COPY manutd-ticket-checker /
+COPY manutd-ticket-checker /usr/bin/
 
-ENTRYPOINT ["/manutd-ticket-checker"]
+ENTRYPOINT ["/usr/bin/manutd-ticket-checker"]
