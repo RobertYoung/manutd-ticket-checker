@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.2...v2.5.3) (2022-09-25)
+
+
+### Bug Fixes
+
+* remove multiple platforms from linux/amd64 ([85114e0](https://github.com/RobertYoung/manutd-ticket-checker/commit/85114e05c5f13c38d4e5a58e6e17a73830a9548f))
+
 ## [2.5.2](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.1...v2.5.2) (2022-09-25)
 
 
