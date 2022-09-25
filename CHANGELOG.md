@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.5.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.4.0...v2.5.0) (2022-09-25)
+
+
+### Features
+
+* pin version of go to 1.17 ([f130dd1](https://github.com/RobertYoung/manutd-ticket-checker/commit/f130dd13f0a8c9338d0aa5513c064759fa95f2d4))
+
+
+### Bug Fixes
+
+* adds docker buildx and qemu github actions ([08f2c09](https://github.com/RobertYoung/manutd-ticket-checker/commit/08f2c090102938f93b7b1d821b78fa905a20e360))
+
 ## [2.4.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.3.0...v2.4.0) (2022-09-25)
 
 
