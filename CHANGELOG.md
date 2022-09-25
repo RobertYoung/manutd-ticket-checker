@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.0...v2.5.1) (2022-09-25)
+
+
+### Bug Fixes
+
+* build images together but under a different os/arch ([26dc39a](https://github.com/RobertYoung/manutd-ticket-checker/commit/26dc39ad26cd8d0dcb6db50a982b8c8dde991939))
+
 ## [2.5.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.4.0...v2.5.0) (2022-09-25)
 
 
