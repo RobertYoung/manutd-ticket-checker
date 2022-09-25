@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.2.1...v2.3.0) (2022-09-25)
+
+
+### Features
+
+* adds support for docker ([7a266dc](https://github.com/RobertYoung/manutd-ticket-checker/commit/7a266dc7e2da8974f7bf82aaf39cffb766bebe90))
+* sets up docker for goreleaser ([5e6dd54](https://github.com/RobertYoung/manutd-ticket-checker/commit/5e6dd54ae3e3a75aa5d7594a789e8867331ae2a3))
+
 ## [2.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.2.0...v2.2.1) (2022-09-24)
 
 
