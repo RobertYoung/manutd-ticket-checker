@@ -7,7 +7,14 @@ A application to scrape the Manchested United ticket site to find available matc
 ### Docker
 
 ```sh
+# cli usage
 docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:latest --help
+
+# supply cli commands via env file
+docker run -it \
+  -v $(pwd)/.cache:/root/.cache \
+  -v $(pwd)/env.yml:/root/env.yml \
+  robertyoung/manutd-ticket-checker:latest --env-file /root/env.yml
 ```
 
 ### Go
