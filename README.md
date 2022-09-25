@@ -60,3 +60,19 @@ GLOBAL OPTIONS:
 
 ![Home Assistant Dashboard Example](/assets/img/haas_dashboard.png "Home Assistant Dashboard Example")
 ![Home Assistant Notification Example](/assets/img/haas_notification.jpeg "Home Assistant Notification Example")
+
+## Docker
+
+```sh
+# docker build
+> docker build -t robertyoung/manutd-ticket-checker:dev .
+
+# m1 macbook local build
+> docker buildx build --platform linux/arm64 -t robertyoung/manutd-ticket-checker:dev --load .
+
+# run locally
+> docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:dev
+
+# build and push to dockerhub
+> docker buildx build --platform linux/arm64,linux/amd64 -t robertyoung/manutd-ticket-checker:dev --push .
+```
