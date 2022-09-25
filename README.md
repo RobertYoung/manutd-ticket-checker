@@ -4,9 +4,20 @@ A application to scrape the Manchested United ticket site to find available matc
 
 ## Installation 
 
+### Docker
+
+```sh
+docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:latest --help
+```
+
+### Go
+
 ```
 go install github.com/robertyoung/manutd-ticket-checker/v2@latest
+manutd-ticket-checker --help
 ```
+
+### Manual 
 
 Or download the latest release from [Github](https://github.com/RobertYoung/manutd-ticket-checker/releases/latest)
 
