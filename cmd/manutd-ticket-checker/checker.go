@@ -110,6 +110,10 @@ func (c *UnitedChecker) CountEventsAvailable() int {
 }
 
 func (c *UnitedChecker) SendNotification(count int) {
+	if c.haas_api == nil {
+		return
+	}
+
 	request := haas.HomeAssistantNotifyRequest{
 		Title:   "Manchester United",
 		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", count),
