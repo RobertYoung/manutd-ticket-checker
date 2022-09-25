@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.2](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.1...v2.5.2) (2022-09-25)
+
+
+### Bug Fixes
+
+* panic if haas isn't enabled when sending a notification ([6f2ec4c](https://github.com/RobertYoung/manutd-ticket-checker/commit/6f2ec4cac984c6e3a3c473075eba3e31b8494151))
+* release arm64 under a different tag ([6e28be9](https://github.com/RobertYoung/manutd-ticket-checker/commit/6e28be9612e651078fc447a2c08853ed6b4e0a91))
+
 ## [2.5.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.0...v2.5.1) (2022-09-25)
 
 
