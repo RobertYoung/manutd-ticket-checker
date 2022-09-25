@@ -4,9 +4,20 @@ A application to scrape the Manchested United ticket site to find available matc
 
 ## Installation 
 
+### Docker
+
+```sh
+docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:latest --help
+```
+
+### Go
+
 ```
 go install github.com/robertyoung/manutd-ticket-checker/v2@latest
+manutd-ticket-checker --help
 ```
+
+### Manual 
 
 Or download the latest release from [Github](https://github.com/RobertYoung/manutd-ticket-checker/releases/latest)
 
@@ -60,3 +71,19 @@ GLOBAL OPTIONS:
 
 ![Home Assistant Dashboard Example](/assets/img/haas_dashboard.png "Home Assistant Dashboard Example")
 ![Home Assistant Notification Example](/assets/img/haas_notification.jpeg "Home Assistant Notification Example")
+
+## Docker
+
+```sh
+# docker build
+> docker build -t robertyoung/manutd-ticket-checker:dev .
+
+# m1 macbook local build
+> docker buildx build --platform linux/arm64 -t robertyoung/manutd-ticket-checker:dev --load .
+
+# run locally
+> docker run -it -v $(pwd)/.cache:/root/.cache robertyoung/manutd-ticket-checker:dev
+
+# build and push to dockerhub
+> docker buildx build --platform linux/arm64,linux/amd64 -t robertyoung/manutd-ticket-checker:dev --push .
+```
