@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.3.0...v2.4.0) (2022-09-25)
+
+
+### Features
+
+* log into dockerhub and updates docker build arch ([3a7357f](https://github.com/RobertYoung/manutd-ticket-checker/commit/3a7357f85685c8335096c164a6b3ec1db05144b7))
+
 ## [2.3.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.2.1...v2.3.0) (2022-09-25)
 
 
