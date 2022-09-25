@@ -36,8 +36,9 @@ func Cli() {
 			Required: false,
 		}),
 		altsrc.NewStringFlag(&cli.StringFlag{
-			Name:  "rod",
-			Usage: "rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace",
+			Name:     "rod",
+			Usage:    "rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace",
+			Required: false,
 		}),
 	}
 	app := &cli.App{
