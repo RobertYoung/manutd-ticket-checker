@@ -147,13 +147,13 @@ func (c *UnitedChecker) SendNotification() {
 		return
 	}
 
-	request := haas.HomeAssistantNotifyRequest{
-		Title:   "Manchester United",
-		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", len(c.available_events)),
-	}
-	c.haas_api.Notify(c.haas_notify_device, request)
+	for _, event := range c.notification_events {
+		request := haas.HomeAssistantNotifyRequest{
+			Title:   "Manchester United",
+			Message: fmt.Sprintf("Tickets available for %s (£%d -> £%d)! 🔴⚽", event.Name(), event.MinPrice, event.MaxPrice),
+		}
+		c.haas_api.Notify(c.haas_notify_device, request)
 
-	for _, event := range c.available_events {
 		event.NotificationSent()
 	}
 }
