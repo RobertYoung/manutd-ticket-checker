@@ -1,8 +1,11 @@
 module github.com/robertyoung/manutd-ticket-checker/v2
 
-go 1.17
+go 1.19
 
-require github.com/go-rod/rod v0.111.0
+require (
+	github.com/go-rod/rod v0.111.0
+	golang.org/x/exp v0.0.0-20220921164117-439092de6870
+)
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
