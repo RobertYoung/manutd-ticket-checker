@@ -2,13 +2,14 @@ package mutc
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	models "github.com/robertyoung/manutd-ticket-checker/v2/cmd/manutd-ticket-checker/models"
 	haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 
-	"log"
-
 	"github.com/go-rod/rod"
+	"golang.org/x/exp/slices"
 )
 
 const UNITED_PREMIER_IMAGE_ID = "1000284.png"
@@ -24,6 +25,7 @@ type UnitedChecker struct {
 	haas_api            *haas.HomeAssistantAPI
 	events              []*UnitedEventItem
 	available_events    []*UnitedEventItem
+	notification_events []*UnitedEventItem
 	haas_notify_device  string
 }
 
@@ -69,6 +71,8 @@ func (c *UnitedChecker) Check() {
 	}
 
 	c.UpdateHaasState()
+	c.EventsAvailable()
+	c.NotificationEvents()
 	c.SendNotification()
 	c.UpdateStore()
 }
@@ -92,9 +96,8 @@ func (c *UnitedChecker) LoadEventListPage() {
 	}
 }
 
-func (c *UnitedChecker) CountEventsAvailable() (int, []*UnitedEventItem) {
-	var count int = 0
-	var available_events []*UnitedEventItem
+func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
+	c.available_events = nil
 
 	for _, event := range c.events {
 		if event.State() != "available" {
@@ -103,11 +106,34 @@ func (c *UnitedChecker) CountEventsAvailable() (int, []*UnitedEventItem) {
 
 		log.Printf("%s available!\n", event.Name())
 
-		count += 1
-		available_events = append(available_events, event)
+		c.available_events = append(c.available_events, event)
 	}
 
-	return count, available_events
+	return c.available_events
+}
+
+func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
+	if c.available_events == nil {
+		panic("available events unavailable")
+	}
+
+	var records = c.store.Read()
+
+	for _, available_event := range c.available_events {
+		index := slices.IndexFunc(records, func(model models.EventModel) bool {
+			return model.Uuid == available_event.Uuid()
+		})
+
+		model := records[index]
+
+		refresh_time := time.Now().Add(-time.Hour * 24)
+
+		if model.NotificationSentAt.Before(refresh_time) {
+			c.notification_events = append(c.notification_events, available_event)
+		}
+	}
+
+	return c.notification_events
 }
 
 func (c *UnitedChecker) SendNotification() {
@@ -115,7 +141,7 @@ func (c *UnitedChecker) SendNotification() {
 		return
 	}
 
-	count, available_events := c.CountEventsAvailable()
+	count := len(c.notification_events)
 
 	if count == 0 {
 		return
@@ -123,11 +149,11 @@ func (c *UnitedChecker) SendNotification() {
 
 	request := haas.HomeAssistantNotifyRequest{
 		Title:   "Manchester United",
-		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", count),
+		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", len(c.available_events)),
 	}
 	c.haas_api.Notify(c.haas_notify_device, request)
 
-	for _, event := range available_events {
+	for _, event := range c.available_events {
 		event.NotificationSent()
 	}
 }
