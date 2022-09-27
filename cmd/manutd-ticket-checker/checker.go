@@ -15,25 +15,25 @@ import (
 const UNITED_PREMIER_IMAGE_ID = "1000284.png"
 const UNITED_BUY_BUTTON_TEXT = "BUY NOW"
 const UNITED_EVENT_PAGE = "https://tickets.manutd.com/en-GB/categories/home-tickets"
-const UNITED_MAX_PRICE = 100
 
 type UnitedChecker struct {
-	browser             *rod.Browser
-	store               *Store
+	browser *rod.Browser
+	store   *Store
+
+	config *Config
+
 	event_list          *UnitedEventListPage
-	premier_league_only bool
 	haas_api            *haas.HomeAssistantAPI
 	events              []*UnitedEventItem
 	available_events    []*UnitedEventItem
 	notification_events []*UnitedEventItem
-	haas_notify_device  string
 }
 
 func (c *UnitedChecker) Check() {
 	c.browser = rod.New()
 	c.LoadEventListPage()
 	c.event_list.DeleteCookieOverlay()
-	c.events = c.event_list.FindEvents(c.premier_league_only)
+	c.events = c.event_list.FindEvents(c.config.PremierLeagueOnly)
 
 	for _, event := range c.events {
 		_, err := event.FindBuyButton()
@@ -93,6 +93,7 @@ func (c *UnitedChecker) LoadEventListPage() {
 			c.browser.MustConnect().MustPage(UNITED_EVENT_PAGE),
 		},
 		haas_api: c.haas_api,
+		config:   c.config,
 	}
 }
 
@@ -124,11 +125,16 @@ func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
 			return model.Uuid == available_event.Uuid()
 		})
 
+		if index == -1 {
+			c.notification_events = append(c.notification_events, available_event)
+			continue
+		}
+
 		model := records[index]
 
-		refresh_time := time.Now().Add(-time.Hour * 24)
+		refresh_time := time.Now().Add(-time.Minute * time.Duration(c.config.HaasNotificationThrottle))
 
-		if model.NotificationSentAt.Before(refresh_time) {
+		if !model.NotificationSentAt.IsZero() && model.NotificationSentAt.Before(refresh_time) {
 			c.notification_events = append(c.notification_events, available_event)
 		}
 	}
@@ -152,7 +158,7 @@ func (c *UnitedChecker) SendNotification() {
 			Title:   "Manchester United",
 			Message: fmt.Sprintf("Tickets available for %s (£%d -> £%d)! 🔴⚽", event.Name(), event.MinPrice, event.MaxPrice),
 		}
-		c.haas_api.Notify(c.haas_notify_device, request)
+		c.haas_api.Notify(c.config.HaasNotifyDevice, request)
 
 		event.NotificationSent()
 	}

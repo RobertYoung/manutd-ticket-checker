@@ -15,6 +15,7 @@ import (
 type UnitedEventItem struct {
 	*rod.Element
 
+	config   *Config
 	haas_api *haas.HomeAssistantAPI
 
 	MinPrice, MaxPrice uint16
@@ -63,7 +64,7 @@ func (e *UnitedEventItem) EntityId() string {
 }
 
 func (e *UnitedEventItem) State() string {
-	if e.MinPrice > UNITED_MAX_PRICE {
+	if e.MinPrice >= uint16(e.config.MaxPrice) {
 		return "unavailable"
 	}
 

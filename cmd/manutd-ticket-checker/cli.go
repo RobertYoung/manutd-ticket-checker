@@ -15,7 +15,14 @@ func Cli() {
 		&cli.StringFlag{Name: "env-file"},
 		altsrc.NewBoolFlag(&cli.BoolFlag{
 			Name:    "premier-league-only",
+			Usage:   "filter premier league events only",
 			Aliases: []string{"plo"},
+		}),
+		altsrc.NewIntFlag(&cli.IntFlag{
+			Name:    "max-price",
+			Usage:   "the maximum price to mark an event as available",
+			Aliases: []string{"mp"},
+			Value:   100,
 		}),
 		altsrc.NewStringFlag(&cli.StringFlag{
 			Name:     "haas-url",
@@ -35,6 +42,13 @@ func Cli() {
 			Aliases:  []string{"hnd"},
 			Required: false,
 		}),
+		altsrc.NewIntFlag(&cli.IntFlag{
+			Name:     "haas-notification-throttle",
+			Usage:    "duration in minutes to wait before resending a notification",
+			Value:    60,
+			Aliases:  []string{"rnd"},
+			Required: false,
+		}),
 		altsrc.NewStringFlag(&cli.StringFlag{
 			Name:     "rod",
 			Usage:    "rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace",
@@ -49,9 +63,11 @@ func Cli() {
 		Before:                 altsrc.InitInputSourceWithContext(flags, altsrc.NewYamlSourceFromFlagFunc("env-file")),
 		Action: func(cCtx *cli.Context) error {
 			premier_league_only := cCtx.Bool("premier-league-only")
+			max_price := cCtx.Int("max-price")
 			haas_url := cCtx.String("haas-url")
 			haas_token := cCtx.String("haas-token")
 			haas_notify_device := cCtx.String("haas-notify-device")
+			haas_notification_throttle := cCtx.Int("haas-notification-throttle")
 
 			if premier_league_only {
 				log.Println("Finding matches for premier league only")
@@ -68,9 +84,15 @@ func Cli() {
 			}
 
 			checker := UnitedChecker{
-				premier_league_only: premier_league_only,
-				haas_api:            haas_api,
-				haas_notify_device:  haas_notify_device,
+				haas_api: haas_api,
+				config: &Config{
+					PremierLeagueOnly:        premier_league_only,
+					MaxPrice:                 max_price,
+					HaasUrl:                  haas_url,
+					HaasToken:                haas_token,
+					HaasNotifyDevice:         haas_notify_device,
+					HaasNotificationThrottle: haas_notification_throttle,
+				},
 			}
 
 			checker.Check()
