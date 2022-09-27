@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.3...v3.0.0) (2022-09-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrades to go 1.19
+
+### Features
+
+* adds max price and notification throttle flags ([06c840b](https://github.com/RobertYoung/manutd-ticket-checker/commit/06c840b005b1e2db4edf8c252f12c04d521c428c))
+* don't mark an event to be notified more than once every 24 hours ([7b93196](https://github.com/RobertYoung/manutd-ticket-checker/commit/7b93196d18bb37387da4d6106864023e2f4946f5))
+* sends notification per match found ([5e0d4d7](https://github.com/RobertYoung/manutd-ticket-checker/commit/5e0d4d748cb423a114e84c4cffc4590f4d3f20db))
+* store event data to csv ([d67c044](https://github.com/RobertYoung/manutd-ticket-checker/commit/d67c0449061301188a6765a2937e18991a0c6a3b))
+* upgrades to go 1.19 ([e12d063](https://github.com/RobertYoung/manutd-ticket-checker/commit/e12d06359f3b607d415261107fe0b747d203c0f1))
+
 ## [2.5.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.2...v2.5.3) (2022-09-25)
 
 
