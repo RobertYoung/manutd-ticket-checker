@@ -59,12 +59,14 @@ COMMANDS:
 
 GLOBAL OPTIONS:
    --env-file value
-   --haas-notify-device value, --hnd value  device in home assistant to send the notification to
-   --haas-token value, --ht value           token for home assistant to authenticate to the api
-   --haas-url value, --hu value             url of home assistant to push state and messages to
-   --help, -h                               show help (default: false)
-   --premier-league-only, --plo             (default: false)
-   --rod value                              rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace
+   --haas-notification-throttle value, --rnd value  duration in minutes to wait before resending a notification (default: 60)
+   --haas-notify-device value, --hnd value          device in home assistant to send the notification to
+   --haas-token value, --ht value                   token for home assistant to authenticate to the api
+   --haas-url value, --hu value                     url of home assistant to push state and messages to
+   --help, -h                                       show help (default: false)
+   --max-price value, --mp value                    the maximum price to mark an event as available (default: 100)
+   --premier-league-only, --plo                     filter premier league events only (default: false)
+   --rod value                                      rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace
 ```
 
 ## Development
