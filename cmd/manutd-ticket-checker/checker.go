@@ -2,35 +2,40 @@ package mutc
 
 import (
 	"fmt"
+	"log"
+	"time"
 
+	models "github.com/robertyoung/manutd-ticket-checker/v2/cmd/manutd-ticket-checker/models"
 	haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 
-	"log"
-
 	"github.com/go-rod/rod"
+	"golang.org/x/exp/slices"
 )
 
 const UNITED_PREMIER_IMAGE_ID = "1000284.png"
 const UNITED_BUY_BUTTON_TEXT = "BUY NOW"
 const UNITED_EVENT_PAGE = "https://tickets.manutd.com/en-GB/categories/home-tickets"
-const UNITED_MAX_PRICE = 100
 
 type UnitedChecker struct {
-	browser             *rod.Browser
+	browser *rod.Browser
+	store   *Store
+
+	config *Config
+
 	event_list          *UnitedEventListPage
-	premier_league_only bool
 	haas_api            *haas.HomeAssistantAPI
+	events              []*UnitedEventItem
 	available_events    []*UnitedEventItem
-	haas_notify_device  string
+	notification_events []*UnitedEventItem
 }
 
 func (c *UnitedChecker) Check() {
 	c.browser = rod.New()
 	c.LoadEventListPage()
 	c.event_list.DeleteCookieOverlay()
-	c.available_events = c.event_list.FindEvents(c.premier_league_only)
+	c.events = c.event_list.FindEvents(c.config.PremierLeagueOnly)
 
-	for _, event := range c.available_events {
+	for _, event := range c.events {
 		_, err := event.FindBuyButton()
 
 		if err != nil {
@@ -57,8 +62,8 @@ func (c *UnitedChecker) Check() {
 		event_detail_page.DeleteCookieOverlay()
 
 		min_price, max_price := event_detail_page.FindPrices()
-		event.min_price = min_price
-		event.max_price = max_price
+		event.MinPrice = min_price
+		event.MaxPrice = max_price
 
 		log.Printf("found %s prices: £%d -> £%d \n", name, min_price, max_price)
 
@@ -66,12 +71,10 @@ func (c *UnitedChecker) Check() {
 	}
 
 	c.UpdateHaasState()
-
-	count_available := c.CountEventsAvailable()
-
-	if count_available > 0 {
-		c.SendNotification(count_available)
-	}
+	c.EventsAvailable()
+	c.NotificationEvents()
+	c.SendNotification()
+	c.UpdateStore()
 }
 
 func (c *UnitedChecker) UpdateHaasState() {
@@ -79,7 +82,7 @@ func (c *UnitedChecker) UpdateHaasState() {
 		return
 	}
 
-	for _, event := range c.available_events {
+	for _, event := range c.events {
 		event.UpdateState()
 	}
 }
@@ -90,33 +93,87 @@ func (c *UnitedChecker) LoadEventListPage() {
 			c.browser.MustConnect().MustPage(UNITED_EVENT_PAGE),
 		},
 		haas_api: c.haas_api,
+		config:   c.config,
 	}
 }
 
-func (c *UnitedChecker) CountEventsAvailable() int {
-	var count int = 0
+func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
+	c.available_events = nil
 
-	for _, event := range c.available_events {
+	for _, event := range c.events {
 		if event.State() != "available" {
 			continue
 		}
 
 		log.Printf("%s available!\n", event.Name())
 
-		count += 1
+		c.available_events = append(c.available_events, event)
 	}
 
-	return count
+	return c.available_events
 }
 
-func (c *UnitedChecker) SendNotification(count int) {
+func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
+	if c.available_events == nil {
+		panic("available events unavailable")
+	}
+
+	var records = c.store.Read()
+
+	for _, available_event := range c.available_events {
+		index := slices.IndexFunc(records, func(model models.EventModel) bool {
+			return model.Uuid == available_event.Uuid()
+		})
+
+		if index == -1 {
+			c.notification_events = append(c.notification_events, available_event)
+			continue
+		}
+
+		model := records[index]
+
+		refresh_time := time.Now().Add(-time.Minute * time.Duration(c.config.HaasNotificationThrottle))
+
+		if !model.NotificationSentAt.IsZero() && model.NotificationSentAt.Before(refresh_time) {
+			c.notification_events = append(c.notification_events, available_event)
+		}
+	}
+
+	return c.notification_events
+}
+
+func (c *UnitedChecker) SendNotification() {
 	if c.haas_api == nil {
 		return
 	}
 
-	request := haas.HomeAssistantNotifyRequest{
-		Title:   "Manchester United",
-		Message: fmt.Sprintf("Tickets available (%d)! 🔴⚽", count),
+	count := len(c.notification_events)
+
+	if count == 0 {
+		return
 	}
-	c.haas_api.Notify(c.haas_notify_device, request)
+
+	for _, event := range c.notification_events {
+		request := haas.HomeAssistantNotifyRequest{
+			Title:   "Manchester United",
+			Message: fmt.Sprintf("Tickets available for %s (£%d -> £%d)! 🔴⚽", event.Name(), event.MinPrice, event.MaxPrice),
+		}
+		c.haas_api.Notify(c.config.HaasNotifyDevice, request)
+
+		event.NotificationSent()
+	}
+}
+
+func (c *UnitedChecker) UpdateStore() {
+	var event_models []models.EventModel
+
+	for _, event := range c.events {
+		event_models = append(event_models, event.ToEventModel())
+	}
+
+	c.store.Save(event_models)
+}
+
+func (c *UnitedChecker) ReadStore() []models.EventModel {
+	return c.store.Read()
 }

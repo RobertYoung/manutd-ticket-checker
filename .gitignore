@@ -3,3 +3,4 @@ dist/
 env.yml
 .cache/
 manutd-ticket-checker
+*.csv
