@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.0...v3.0.1) (2022-09-27)
+
+
+### Bug Fixes
+
+* adding missing mutc files ([8b20617](https://github.com/RobertYoung/manutd-ticket-checker/commit/8b206172e0af2f5a309cf3bcfb28ac4aea66792e))
+
 ## [3.0.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v2.5.3...v3.0.0) (2022-09-27)
 
 
