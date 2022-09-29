@@ -16,7 +16,7 @@ type Store struct {
 const UNITED_CSV_FILENAME = "united_events.csv"
 
 func (s *Store) Read() []models.EventModel {
-	csv_file, err := os.Open(UNITED_CSV_FILENAME)
+	csv_file, err := os.OpenFile(UNITED_CSV_FILENAME, os.O_CREATE|os.O_RDONLY, 0777)
 
 	if err != nil {
 		panic(err)
