@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.2...v3.0.3) (2022-09-29)
+
+
+### Bug Fixes
+
+* reading a file when it doesn't exist ([77cff79](https://github.com/RobertYoung/manutd-ticket-checker/commit/77cff797ac868c1120fd4582d800e5db2734f508))
+
 ## [3.0.2](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.1...v3.0.2) (2022-09-29)
 
 
