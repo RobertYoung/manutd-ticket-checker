@@ -15,18 +15,13 @@ type Store struct {
 
 const UNITED_CSV_FILENAME = "united_events.csv"
 
-func (s *Store) GetFile() *os.File {
-	csv_file, err := os.OpenFile(UNITED_CSV_FILENAME, os.O_CREATE|os.O_RDWR, os.ModePerm)
+func (s *Store) Read() []models.EventModel {
+	csv_file, err := os.Open(UNITED_CSV_FILENAME)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return csv_file
-}
-
-func (s *Store) Read() []models.EventModel {
-	csv_file := s.GetFile()
 	reader := csv.NewReader(csv_file)
 	records, err := reader.ReadAll()
 
@@ -56,13 +51,19 @@ func (s *Store) Read() []models.EventModel {
 }
 
 func (s *Store) Save(events []models.EventModel) {
-	csv_file := s.GetFile()
+	csv_file, err := os.Create(UNITED_CSV_FILENAME)
+
+	if err != nil {
+		log.Fatalln("failed to open file", err)
+	}
+
 	writer := csv.NewWriter(csv_file)
+	var rows [][]string
 
 	defer csv_file.Close()
 
 	for _, model := range events {
-		line := []string{
+		row := []string{
 			model.Uuid,
 			model.Name,
 			strconv.Itoa(int(model.MinPrice)),
@@ -70,12 +71,10 @@ func (s *Store) Save(events []models.EventModel) {
 			model.NotificationSentAt.Format(time.RFC3339),
 		}
 
-		if err := writer.Write(line); err != nil {
-			log.Fatalln("error writing record to csv:", err)
-		}
+		rows = append(rows, row)
 	}
 
-	writer.Flush()
+	writer.WriteAll(rows)
 
 	if err := writer.Error(); err != nil {
 		log.Fatal(err)

@@ -118,7 +118,7 @@ func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
 		panic("available events unavailable")
 	}
 
-	var records = c.store.Read()
+	var records = c.ReadStore()
 
 	for _, available_event := range c.available_events {
 		index := slices.IndexFunc(records, func(model models.EventModel) bool {
@@ -134,7 +134,7 @@ func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
 
 		refresh_time := time.Now().Add(-time.Minute * time.Duration(c.config.HaasNotificationThrottle))
 
-		if !model.NotificationSentAt.IsZero() && model.NotificationSentAt.Before(refresh_time) {
+		if model.NotificationSentAt.Before(refresh_time) {
 			c.notification_events = append(c.notification_events, available_event)
 		}
 	}
