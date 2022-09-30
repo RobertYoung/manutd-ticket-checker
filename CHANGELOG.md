@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.4](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.3...v3.0.4) (2022-09-30)
+
+
+### Bug Fixes
+
+* fixes notification sent at override in csv file ([b2f3c5f](https://github.com/RobertYoung/manutd-ticket-checker/commit/b2f3c5f980c2cc4c2e19be392ed44af245d8ccce))
+
 ## [3.0.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.2...v3.0.3) (2022-09-29)
 
 
