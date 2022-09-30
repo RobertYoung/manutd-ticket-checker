@@ -72,6 +72,7 @@ func (c *UnitedChecker) Check() {
 
 	c.UpdateHaasState()
 	c.EventsAvailable()
+	c.ReadStore()
 	c.NotificationEvents()
 	c.SendNotification()
 	c.UpdateStore()
@@ -118,23 +119,15 @@ func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
 		panic("available events unavailable")
 	}
 
-	var records = c.ReadStore()
-
 	for _, available_event := range c.available_events {
-		index := slices.IndexFunc(records, func(model models.EventModel) bool {
-			return model.Uuid == available_event.Uuid()
-		})
-
-		if index == -1 {
+		if available_event.Model == nil {
 			c.notification_events = append(c.notification_events, available_event)
 			continue
 		}
 
-		model := records[index]
-
 		refresh_time := time.Now().Add(-time.Minute * time.Duration(c.config.HaasNotificationThrottle))
 
-		if model.NotificationSentAt.Before(refresh_time) {
+		if available_event.Model.NotificationSentAt.Before(refresh_time) {
 			c.notification_events = append(c.notification_events, available_event)
 		}
 	}
@@ -175,5 +168,18 @@ func (c *UnitedChecker) UpdateStore() {
 }
 
 func (c *UnitedChecker) ReadStore() []models.EventModel {
-	return c.store.Read()
+	var records = c.store.Read()
+
+	for _, available_event := range c.available_events {
+		index := slices.IndexFunc(records, func(model models.EventModel) bool {
+			return model.Uuid == available_event.Uuid()
+		})
+
+		if index >= 0 {
+			model := records[index]
+			available_event.Model = &model
+		}
+	}
+
+	return records
 }

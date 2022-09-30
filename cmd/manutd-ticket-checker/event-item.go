@@ -20,6 +20,7 @@ type UnitedEventItem struct {
 
 	MinPrice, MaxPrice uint16
 	NotificationSentAt time.Time
+	Model              *models.EventModel
 }
 
 func (e *UnitedEventItem) Uuid() string {
@@ -132,11 +133,17 @@ func (e *UnitedEventItem) NotificationSent() {
 }
 
 func (e *UnitedEventItem) ToEventModel() models.EventModel {
+	notification_sent_at := e.NotificationSentAt
+
+	if e.NotificationSentAt.IsZero() && e.Model != nil {
+		notification_sent_at = e.Model.NotificationSentAt
+	}
+
 	return models.EventModel{
 		Uuid:               e.Uuid(),
 		Name:               e.Name(),
 		MinPrice:           e.MinPrice,
 		MaxPrice:           e.MaxPrice,
-		NotificationSentAt: e.NotificationSentAt,
+		NotificationSentAt: notification_sent_at,
 	}
 }
