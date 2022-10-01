@@ -106,6 +106,10 @@ func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
 			continue
 		}
 
+		if event.MaxPrice == 0 {
+			continue
+		}
+
 		log.Printf("%s available!\n", event.Name())
 
 		c.available_events = append(c.available_events, event)
