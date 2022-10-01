@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.4...v3.1.0) (2022-10-01)
+
+
+### Features
+
+* don't show events that have a max price of 0 ([5a5e7cd](https://github.com/RobertYoung/manutd-ticket-checker/commit/5a5e7cd8974ff34b2f467b2d2fbf8e2f1e798b9f))
+
 ## [3.0.4](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.3...v3.0.4) (2022-09-30)
 
 
