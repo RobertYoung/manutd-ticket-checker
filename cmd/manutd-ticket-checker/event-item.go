@@ -19,6 +19,7 @@ type UnitedEventItem struct {
 	haas_api *haas.HomeAssistantAPI
 
 	MinPrice, MaxPrice uint16
+	HasSeatsAvailable  bool
 	NotificationSentAt time.Time
 	Model              *models.EventModel
 }
@@ -65,17 +66,17 @@ func (e *UnitedEventItem) EntityId() string {
 }
 
 func (e *UnitedEventItem) State() string {
-	if e.MinPrice >= uint16(e.config.MaxPrice) {
-		return "unavailable"
-	}
-
 	_, err := e.FindBuyButton()
 
 	if err != nil {
 		return "unavailable"
 	}
 
-	return "available"
+	if e.HasSeatsAvailable {
+		return "available"
+	}
+
+	return "unavailable"
 }
 
 func (e *UnitedEventItem) FindBuyButton() (*rod.Element, error) {

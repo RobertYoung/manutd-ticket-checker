@@ -43,7 +43,7 @@ func (c *UnitedChecker) Check() {
 		}
 
 		name := event.Name()
-		log.Printf("checking %s...", name)
+		log.Printf("checking %s", name)
 
 		event.LoadEventDetailPage(event)
 
@@ -57,15 +57,19 @@ func (c *UnitedChecker) Check() {
 			UnitedPage: &UnitedPage{
 				pages.MustFindByURL("/events/"),
 			},
+			config: c.config,
 		}
 		event_detail_page.WaitLoad()
 		event_detail_page.DeleteCookieOverlay()
 
-		min_price, max_price := event_detail_page.FindPrices()
+		min_price, max_price := event_detail_page.FindMinAndMaxPrices()
 		event.MinPrice = min_price
 		event.MaxPrice = max_price
+		event.HasSeatsAvailable = event_detail_page.HasAvailableSeats()
 
-		log.Printf("found %s prices: £%d -> £%d \n", name, min_price, max_price)
+		if event.HasSeatsAvailable {
+			log.Printf("found %s seats available | £%d -> £%d \n", name, min_price, max_price)
+		}
 
 		event_detail_page.Close()
 	}
@@ -103,10 +107,6 @@ func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
 
 	for _, event := range c.events {
 		if event.State() != "available" {
-			continue
-		}
-
-		if event.MaxPrice == 0 {
 			continue
 		}
 

@@ -21,8 +21,20 @@ func Cli() {
 		altsrc.NewIntFlag(&cli.IntFlag{
 			Name:    "max-price",
 			Usage:   "the maximum price to mark an event as available",
-			Aliases: []string{"mp"},
+			Aliases: []string{"maxp"},
 			Value:   100,
+		}),
+		altsrc.NewIntFlag(&cli.IntFlag{
+			Name:    "min-price",
+			Usage:   "the minimum price to mark an event as available",
+			Aliases: []string{"minp"},
+			Value:   1,
+		}),
+		altsrc.NewIntFlag(&cli.IntFlag{
+			Name:    "number-of-seats",
+			Usage:   "the number of seats required",
+			Aliases: []string{"ns"},
+			Value:   1,
 		}),
 		altsrc.NewStringFlag(&cli.StringFlag{
 			Name:     "haas-url",
@@ -64,6 +76,8 @@ func Cli() {
 		Action: func(cCtx *cli.Context) error {
 			premier_league_only := cCtx.Bool("premier-league-only")
 			max_price := cCtx.Int("max-price")
+			min_price := cCtx.Int("min-price")
+			number_of_seats := cCtx.Int("number-of-seats")
 			haas_url := cCtx.String("haas-url")
 			haas_token := cCtx.String("haas-token")
 			haas_notify_device := cCtx.String("haas-notify-device")
@@ -88,6 +102,8 @@ func Cli() {
 				config: &Config{
 					PremierLeagueOnly:        premier_league_only,
 					MaxPrice:                 max_price,
+					MinPrice:                 min_price,
+					NumberOfSeats:            number_of_seats,
 					HaasUrl:                  haas_url,
 					HaasToken:                haas_token,
 					HaasNotifyDevice:         haas_notify_device,
