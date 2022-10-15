@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.1.0...v3.2.0) (2022-10-15)
+
+
+### Features
+
+* checks the seats are available by trying to add to basket ([f6644dd](https://github.com/RobertYoung/manutd-ticket-checker/commit/f6644dd40a437b697cd1418a770241332cf3ef0c))
+
 ## [3.1.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.0.4...v3.1.0) (2022-10-01)
 
 
