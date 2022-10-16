@@ -103,7 +103,7 @@ func (c *UnitedChecker) LoadEventListPage() {
 }
 
 func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
-	c.available_events = nil
+	c.available_events = make([]*UnitedEventItem, 0)
 
 	for _, event := range c.events {
 		if event.State() != "available" {
@@ -120,7 +120,8 @@ func (c *UnitedChecker) EventsAvailable() []*UnitedEventItem {
 
 func (c *UnitedChecker) NotificationEvents() []*UnitedEventItem {
 	if c.available_events == nil {
-		panic("available events unavailable")
+		log.Printf("available events unavailable")
+		return make([]*UnitedEventItem, 0)
 	}
 
 	for _, available_event := range c.available_events {
