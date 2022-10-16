@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.0...v3.2.1) (2022-10-16)
+
+
+### Bug Fixes
+
+* fixes panic if no available events are found ([3806602](https://github.com/RobertYoung/manutd-ticket-checker/commit/38066022172fd1cf43d3b1b095e517f1cec6fa15))
+
 ## [3.2.0](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.1.0...v3.2.0) (2022-10-15)
 
 
