@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.2](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.1...v3.2.2) (2022-10-19)
+
+
+### Bug Fixes
+
+* check for errors if it can't find an element ([297ddab](https://github.com/RobertYoung/manutd-ticket-checker/commit/297ddab3048ff7e07506dd58fd13e52ef8bf34ad))
+
 ## [3.2.1](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.0...v3.2.1) (2022-10-16)
 
 
