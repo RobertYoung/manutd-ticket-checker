@@ -108,7 +108,7 @@ func (e *UnitedEventItem) IsPremierLeagueEvent() bool {
 }
 
 func (e *UnitedEventItem) BuyButton() (*rod.Element, error) {
-	return e.Timeout(5 * time.Second).Element("div.addToBasketXX > a")
+	return e.Timeout(5 * time.Second).Element("div.addToBasket > a")
 }
 
 func (e *UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) error {
