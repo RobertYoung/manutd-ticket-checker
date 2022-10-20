@@ -107,14 +107,21 @@ func (e *UnitedEventItem) IsPremierLeagueEvent() bool {
 	return false
 }
 
-func (e *UnitedEventItem) BuyButton() *rod.Element {
-	return e.MustElement("div.addToBasket > a")
+func (e *UnitedEventItem) BuyButton() (*rod.Element, error) {
+	return e.Timeout(5 * time.Second).Element("div.addToBasketXX > a")
 }
 
-func (e *UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) {
-	buy_button := event.BuyButton()
+func (e *UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) error {
+	buy_button, err := event.BuyButton()
+
+	if err != nil {
+		return err
+	}
+
 	buy_button.MustEval(`() => this.target="_blank"`)
 	buy_button.MustClick()
+
+	return nil
 }
 
 func (e *UnitedEventItem) UpdateState() {

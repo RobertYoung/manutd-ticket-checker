@@ -45,17 +45,30 @@ func (c *UnitedChecker) Check() {
 		name := event.Name()
 		log.Printf("checking %s", name)
 
-		event.LoadEventDetailPage(event)
+		err = event.LoadEventDetailPage(event)
+
+		if err != nil {
+			log.Print("failed to load event details page: ", err)
+			continue
+		}
 
 		pages, err := c.browser.Pages()
 
 		if err != nil {
-			panic(err)
+			log.Print("failed to get pages: ", err)
+			continue
+		}
+
+		events_page, err := pages.FindByURL("/events/")
+
+		if err != nil {
+			log.Print("failed to find events page: ", err)
+			continue
 		}
 
 		event_detail_page := UnitedEventDetailPage{
 			UnitedPage: &UnitedPage{
-				pages.MustFindByURL("/events/"),
+				Page: events_page,
 			},
 			config: c.config,
 		}

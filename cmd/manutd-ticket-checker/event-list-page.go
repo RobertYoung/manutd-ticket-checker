@@ -1,6 +1,8 @@
 package mutc
 
 import (
+	"log"
+
 	haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 )
 
@@ -12,7 +14,13 @@ type UnitedEventListPage struct {
 }
 
 func (c *UnitedEventListPage) FindEvents(premier_league_only bool) []*UnitedEventItem {
-	events := c.MustElements("#eventsList .dataItem")
+	events, err := c.Elements("#eventsList .dataItem")
+
+	if err != nil {
+		log.Print("failed to find event items: ", err)
+		return []*UnitedEventItem{}
+	}
+
 	var event_list []*UnitedEventItem
 
 	for _, element := range events {
