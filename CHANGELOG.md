@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.4](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.3...v3.2.4) (2022-10-20)
+
+
+### Bug Fixes
+
+* fixes add to basket css selector ([5e07db2](https://github.com/RobertYoung/manutd-ticket-checker/commit/5e07db261461613075cc28a184bc5e399182da1d))
+
 ## [3.2.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.2...v3.2.3) (2022-10-20)
 
 
