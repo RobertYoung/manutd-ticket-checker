@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.3](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.2...v3.2.3) (2022-10-20)
+
+
+### Bug Fixes
+
+* improves error handling ([e6059d2](https://github.com/RobertYoung/manutd-ticket-checker/commit/e6059d2ccde41cf26d40b443139c1bcd52e88e79))
+
 ## [3.2.2](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.1...v3.2.2) (2022-10-19)
 
 
