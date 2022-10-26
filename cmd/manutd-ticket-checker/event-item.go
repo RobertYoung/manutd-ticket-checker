@@ -3,6 +3,7 @@ package mutc
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -108,7 +109,11 @@ func (e *UnitedEventItem) IsPremierLeagueEvent() bool {
 }
 
 func (e *UnitedEventItem) BuyButton() (*rod.Element, error) {
-	return e.Timeout(5 * time.Second).Element("div.addToBasket > a")
+	log.Printf("finding buy button for %s", e.Name())
+	button, err := e.Element.Element("div.addToBasket > a")
+	log.Printf("found buy button for %s", e.Name())
+
+	return button, err
 }
 
 func (e *UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) error {

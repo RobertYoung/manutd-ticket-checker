@@ -17,7 +17,7 @@ type UnitedEventDetailPage struct {
 }
 
 func (p *UnitedEventDetailPage) FindMinAndMaxPrices() (uint16, uint16) {
-	price_input, err := p.Timeout(5 * time.Second).Element(".areas-filter-panel__price-section input[type=number]")
+	price_input, err := p.Element(".areas-filter-panel__price-section input[type=number]")
 
 	if err != nil {
 		return 0, 0
