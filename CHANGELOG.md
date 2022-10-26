@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.5](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.4...v3.2.5) (2022-10-26)
+
+
+### Bug Fixes
+
+* removes timeouts and adds debugging ([bf776fb](https://github.com/RobertYoung/manutd-ticket-checker/commit/bf776fba6a9158f90e0450f9d50de907b85059e5))
+
 ## [3.2.4](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.3...v3.2.4) (2022-10-20)
 
 
