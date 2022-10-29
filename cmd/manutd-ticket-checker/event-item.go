@@ -3,7 +3,6 @@ package mutc
 import (
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -108,21 +107,12 @@ func (e *UnitedEventItem) IsPremierLeagueEvent() bool {
 	return false
 }
 
-func (e *UnitedEventItem) BuyButton() (*rod.Element, error) {
-	log.Printf("finding buy button for %s", e.Name())
-	button, err := e.Element.Element("div.addToBasket > a")
-	log.Printf("found buy button for %s", e.Name())
-
-	return button, err
+func (e *UnitedEventItem) BuyButton() *rod.Element {
+	return e.MustElement("div.addToBasket > a")
 }
 
 func (e *UnitedEventItem) LoadEventDetailPage(event *UnitedEventItem) error {
-	buy_button, err := event.BuyButton()
-
-	if err != nil {
-		return err
-	}
-
+	buy_button := event.BuyButton()
 	buy_button.MustEval(`() => this.target="_blank"`)
 	buy_button.MustClick()
 

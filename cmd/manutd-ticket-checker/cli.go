@@ -3,6 +3,7 @@ package mutc
 import (
 	"log"
 	"os"
+	"time"
 
 	haas "github.com/robertyoung/manutd-ticket-checker/v2/pkg/home-assistant"
 
@@ -61,6 +62,13 @@ func Cli() {
 			Aliases:  []string{"rnd"},
 			Required: false,
 		}),
+		altsrc.NewIntFlag(&cli.IntFlag{
+			Name:     "timeout",
+			Usage:    "duration in seconds to wait before killing the process",
+			Value:    120,
+			Aliases:  []string{"t"},
+			Required: false,
+		}),
 		altsrc.NewStringFlag(&cli.StringFlag{
 			Name:     "rod",
 			Usage:    "rod specific arguments, eg. https://go-rod.github.io/#/get-started/README?id=slow-motion-and-visual-trace",
@@ -74,6 +82,7 @@ func Cli() {
 		Flags:                  flags,
 		Before:                 altsrc.InitInputSourceWithContext(flags, altsrc.NewYamlSourceFromFlagFunc("env-file")),
 		Action: func(cCtx *cli.Context) error {
+
 			premier_league_only := cCtx.Bool("premier-league-only")
 			max_price := cCtx.Int("max-price")
 			min_price := cCtx.Int("min-price")
@@ -82,6 +91,9 @@ func Cli() {
 			haas_token := cCtx.String("haas-token")
 			haas_notify_device := cCtx.String("haas-notify-device")
 			haas_notification_throttle := cCtx.Int("haas-notification-throttle")
+			timeout_seconds := cCtx.Int("timeout")
+
+			go timeout(time.Duration(timeout_seconds) * time.Second)
 
 			if premier_league_only {
 				log.Println("Finding matches for premier league only")
@@ -120,4 +132,9 @@ func Cli() {
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func timeout(duration time.Duration) {
+	time.Sleep(duration)
+	panic("program timed out")
 }

@@ -9,15 +9,9 @@ type UnitedPage struct {
 }
 
 func (c *UnitedPage) DeleteCookieOverlay() {
-	tint_overlay, err := c.Element("#tint-overlay")
+	tint_overlay := c.MustElement("#tint-overlay")
+	tint_overlay.Remove()
 
-	if err == nil {
-		tint_overlay.Remove()
-	}
-
-	cookie_messages, err := c.Element("#cookie-messages")
-
-	if err == nil {
-		cookie_messages.Remove()
-	}
+	cookie_messages := c.MustElement("#cookie-messages")
+	cookie_messages.Remove()
 }
