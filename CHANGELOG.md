@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.6](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.5...v3.2.6) (2022-10-29)
+
+
+### Bug Fixes
+
+* adds timeout argument to help with rod hanging ([0c228e5](https://github.com/RobertYoung/manutd-ticket-checker/commit/0c228e52dfb3b0bb8be13eb17557f225309feece))
+
 ## [3.2.5](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.4...v3.2.5) (2022-10-26)
 
 
