@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.7](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.6...v3.2.7) (2022-11-04)
+
+
+### Bug Fixes
+
+* replace parenthesis in home assistant ids ([910f660](https://github.com/RobertYoung/manutd-ticket-checker/commit/910f660ab49797b823aa2c21d5aa24132d99277c))
+
 ## [3.2.6](https://github.com/RobertYoung/manutd-ticket-checker/compare/v3.2.5...v3.2.6) (2022-10-29)
 
 
