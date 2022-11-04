@@ -61,6 +61,8 @@ func (e *UnitedEventItem) EntityId() string {
 	value = strings.ToLower(value)
 	value = strings.ReplaceAll(value, " ", "_")
 	value = strings.ReplaceAll(value, ".", "")
+	value = strings.ReplaceAll(value, "(", "")
+	value = strings.ReplaceAll(value, ")", "")
 
 	return value
 }
